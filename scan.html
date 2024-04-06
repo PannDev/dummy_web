@@ -1,44 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCAN</title>
 </head>
+
 <body>
-    
+
     <div id="you_qr_result"></div>
     <!-- <h1>SCAN</h1> -->
 
     <div style="display: flex;justify-content: center;">
         <div id="my_qr_reader" style="width: 500px;">
-        
+
         </div>
 
     </div>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://script.google.com/macros/s/AKfycbzKUKbiy67U_MTjTQaNSIRTftkxPJi3ksAxQPMpGf8yJvFNqxI-di05r8Vp88yCektE/exec"></script>
+
 
     <script>
         alert("harap izinkan kamera untuk scan qr code");
-        setTimeout(function(){
+        setTimeout(function () {
             alert("lalu pilih camera2 untuk camera belakang");
-    }, 5000);
-        
+        }, 5000);
+
         var myqr = document.getElementById('you_qr_result');
         var lastResult, countResult = 0;
+
+
+        // old one
+        // function onScanSuccess(decodeText, decodeResult) { 
+        //     if (decodeText !== lastResult) {
+        //         ++countResult;
+        //         lastResult = decodeText;
+
+        //         //alert
+        //         alert(decodeText); // You can remove the decodeResult from the alert if not needed
+
+        //         myqr.innerHTML = 'You scanned ' + countResult + ' time(s): ' + decodeText;
+        //     }
+        // }
 
         function onScanSuccess(decodeText, decodeResult) {
             if (decodeText !== lastResult) {
                 ++countResult;
                 lastResult = decodeText;
 
-                //alert
-                alert(decodeText); // You can remove the decodeResult from the alert if not needed
+                // Call Google Apps Script function with QR code data
+                google.script.run.withSuccessHandler(function () {
+                    console.log("Background changed successfully!");
+                }).changeBackground(decodeText);
 
+                // Update displayed message
                 myqr.innerHTML = 'You scanned ' + countResult + ' time(s): ' + decodeText;
             }
         }
+
 
         var htmlScanner = new Html5QrcodeScanner(
             "my_qr_reader", { fps: 10, qrbox: 250 }
@@ -48,4 +70,5 @@
     </script>
 
 </body>
+
 </html>
