@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAN</title>
+</head>
+<body>
+    
+    <div id="you_qr_result"></div>
+    <!-- <h1>SCAN</h1> -->
+
+    <div style="display: flex;justify-content: center;">
+        <div id="my_qr_reader" style="width: 500px;">
+        
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script>
+        var myqr = document.getElementById('you_qr_result');
+        var lastResult, countResult = 0;
+
+        function onScanSuccess(decodeText, decodeResult) {
+            if (decodeText !== lastResult) {
+                ++countResult;
+                lastResult = decodeText;
+
+                //alert
+                alert(decodeText); // You can remove the decodeResult from the alert if not needed
+
+                myqr.innerHTML = 'You scanned ' + countResult + ' time(s): ' + decodeText;
+            }
+        }
+
+        var htmlScanner = new Html5QrcodeScanner(
+            "my_qr_reader", { fps: 10, qrbox: 250 }
+        );
+
+        htmlScanner.render(onScanSuccess);
+    </script>
+
+</body>
+</html>
