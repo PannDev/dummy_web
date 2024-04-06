@@ -20,6 +20,11 @@
     <script src="https://unpkg.com/html5-qrcode"></script>
 
     <script>
+        alert("harap izinkan kamera untuk scan qr code");
+        setTimeout(function(){
+            alert("lalu pilih camera2 untuk camera belakang");
+    }, 5000);
+        
         var myqr = document.getElementById('you_qr_result');
         var lastResult, countResult = 0;
 
